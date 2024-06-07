@@ -47,6 +47,11 @@ def parse_subject_alternative_name_extension(certificate: Certificate) -> Subjec
     return SubjectAlternativeNameExtension(dns_names=dns_names, ip_addresses=ip_addresses)
 
 
+def extract_dns_subject_alternative_names(certificate: Certificate) -> List[str]:
+    san_extension = parse_subject_alternative_name_extension(certificate)
+    return san_extension.dns_names
+
+
 def get_common_names(name_field: Name) -> List[str]:
     return [cn.value for cn in name_field.get_attributes_for_oid(NameOID.COMMON_NAME)]  # type: ignore
 
